@@ -19,6 +19,7 @@ public class GoopTrigger : MonoBehaviour
             }
             else
             {
+                col.gameObject.GetComponent<GoopHandler>().TriggerGoopRunSound();
                 col.gameObject.GetComponent<GoopHandler>().TriggerGoopRun(this.gameObject);
             }
         }

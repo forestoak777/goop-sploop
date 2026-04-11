@@ -13,6 +13,9 @@ public class GoopHandler : MonoBehaviour
 
     float currentMaxSpeed = 0.0f, currentMaxAirSpeed = 0.0f;
 
+    public AudioClip goopTouchSoundClip;
+    public AudioSource playerAudioSource;
+
     void Start() {
         charController = GetComponent<KinematicCharacterController.Examples.ExampleCharacterController>();
         initMaxSpeed = charController.MaxStableMoveSpeed;
@@ -35,14 +38,21 @@ public class GoopHandler : MonoBehaviour
             //Bounce goo
             Debug.Log("Adding Velocity!");
             if(currentCooldown <= 0.05f){
+                playerAudioSource.PlayOneShot(goopTouchSoundClip, 0.6f); 
                 charController.AddVelocity(goop.transform.TransformDirection(Vector3.forward) * (goop.GetComponent<GoopTrigger>().gooBounceAmount + Mathf.Abs(GetComponent<Rigidbody>().linearVelocity.y)));
             }
             currentCooldown = coolDown;
     }
 
     
+    public void TriggerGoopRunSound()
+    {
+        playerAudioSource.PlayOneShot(goopTouchSoundClip, 0.1f); 
+    }
+
     public void TriggerGoopRun(GameObject goop)
     {
+            
             Debug.Log("More Speed!");
             currentMaxSpeed = initMaxSpeed * goop.GetComponent<GoopTrigger>().gooSpeedMultiplier;
             currentMaxAirSpeed = initMaxAirSpeed * goop.GetComponent<GoopTrigger>().gooSpeedMultiplier;
