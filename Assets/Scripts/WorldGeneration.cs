@@ -10,7 +10,7 @@ public class WorldGeneration : MonoBehaviour
     public int worldSizeInBlocks = 4;
     // Basically the basis for how far apart individual prefabs will spawn
     public float baseBlockSpacing = 16;
-    public Transform buildingBlocksParent;
+    public Transform[] buildingBlocksParents;
 
     public void GenerateWorld(Transform worldSpawnPoint)
     {
@@ -18,6 +18,13 @@ public class WorldGeneration : MonoBehaviour
 
         var basePosition = worldSpawnPoint.position;
 
+        var selectedBuildingBlocksParent = buildingBlocksParents[0];
+
+        if(basePosition.y > 500)
+        {
+            selectedBuildingBlocksParent = buildingBlocksParents[1];
+        }
+        
         var blockSpacing = baseBlockSpacing + Mathf.Log((numTimesWorldGenerated*numTimesWorldGenerated+10));
 
 
@@ -28,12 +35,12 @@ public class WorldGeneration : MonoBehaviour
             {
                 for(int z = -worldSizeInBlocks; z < worldSizeInBlocks; z++)
                 {
-                    buildingBlockSpawnIndex = Mathf.RoundToInt(Random.Range(0, buildingBlocksParent.childCount-1));
+                    buildingBlockSpawnIndex = Mathf.RoundToInt(Random.Range(0, selectedBuildingBlocksParent.childCount-1));
 
                     var clone = Instantiate(
-                        buildingBlocksParent.GetChild(buildingBlockSpawnIndex).gameObject, 
+                        selectedBuildingBlocksParent.GetChild(buildingBlockSpawnIndex).gameObject, 
                         new Vector3(basePosition.x + x * blockSpacing + Random.Range(-blockSpacing, blockSpacing), basePosition.y + y * blockSpacing + Random.Range(-blockSpacing, blockSpacing), basePosition.z + z * blockSpacing + Random.Range(-blockSpacing, blockSpacing)),
-                        Quaternion.identity
+                        selectedBuildingBlocksParent.GetChild(buildingBlockSpawnIndex).rotation
                     );
 
             
@@ -44,7 +51,7 @@ public class WorldGeneration : MonoBehaviour
         //spawn next gen sphere
            var clone2 = Instantiate(
                 genSphere, 
-                new Vector3(basePosition.x + (worldSizeInBlocks / 2f) * blockSpacing, basePosition.y + worldSizeInBlocks * blockSpacing + 10f, basePosition.z + (worldSizeInBlocks / 2f) * blockSpacing),
+                new Vector3(basePosition.x + Random.Range(-worldSizeInBlocks, worldSizeInBlocks) * blockSpacing, basePosition.y + worldSizeInBlocks * blockSpacing + Random.Range(7f, 10f), basePosition.z + + Random.Range(-worldSizeInBlocks, worldSizeInBlocks) * blockSpacing),
                 Quaternion.identity
             );  
 

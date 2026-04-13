@@ -13,6 +13,8 @@ public class WinGame : MonoBehaviour
             {
                 Debug.LogError("Player parent doesnt have playermanager script");
             }
+
+            Destroy(this.gameObject);
         }
     }
 }

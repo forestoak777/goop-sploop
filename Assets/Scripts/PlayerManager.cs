@@ -1,6 +1,10 @@
 using UnityEngine;
 using TMPro;
-
+using Unity.Services.Authentication;
+using Unity.Services.Core;
+using Unity.Services.Leaderboards;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 public class PlayerManager : MonoBehaviour
 {
 
@@ -25,17 +29,50 @@ public class PlayerManager : MonoBehaviour
 
     bool countTime = true;
 
+    public TextMeshPro usernameText;
+
     public void StopTimeCounter()
     {
         countTime = false;
         timeText.color = Color.green;
+        
+        timeText.text = "Uploading time...\n" + System.Math.Round(timeCount, 2).ToString();
+
+        AddScore(timeCount);
+
+    }
+
+    const string LeaderboardId = "1000mTime";
+
+    public async void AddScore(float scoreNum)
+    {
+        var scoreResponse = await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardId, scoreNum);
+        Debug.Log(JsonConvert.SerializeObject(scoreResponse));
+
+        timeText.text = "Time uploaded.\n" + System.Math.Round(timeCount, 2).ToString();
+        
     }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    async void Awake()
+    {
+        await UnityServices.InitializeAsync();
+
+        if (!AuthenticationService.Instance.IsSignedIn)
+        {
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
+
+        var playerName = await AuthenticationService.Instance.GetPlayerNameAsync();
+        usernameText.text = "Username: " + playerName;
+    }
+
     void Start()
     {
+        
         shootPoint.rotation = Quaternion.LookRotation(mainCamera.TransformDirection(Vector3.forward));
+
     }
 
     int frameCounter = 0;
@@ -51,9 +88,8 @@ public class PlayerManager : MonoBehaviour
         if (countTime)
         {
             timeCount += Time.deltaTime;
+            timeText.text = "Time: " + System.Math.Round(timeCount, 2).ToString();
         }
-
-        timeText.text = "Time: " + timeCount.ToString("0.###");
 
         if (Input.GetMouseButtonDown(0))
         {
