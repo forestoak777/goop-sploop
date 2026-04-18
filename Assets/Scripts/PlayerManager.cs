@@ -35,7 +35,7 @@ public class PlayerManager : MonoBehaviour
     {
         countTime = false;
         timeText.color = Color.green;
-        
+
         timeText.text = "Uploading time...\n" + System.Math.Round(timeCount, 2).ToString();
 
         AddScore(timeCount);
@@ -50,7 +50,9 @@ public class PlayerManager : MonoBehaviour
         Debug.Log(JsonConvert.SerializeObject(scoreResponse));
 
         timeText.text = "Time uploaded.\n" + System.Math.Round(timeCount, 2).ToString();
-        
+
+        usernameText.text = usernameText.text + "\n has found ze gold";
+
     }
 
 
@@ -70,7 +72,7 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        
+
         shootPoint.rotation = Quaternion.LookRotation(mainCamera.TransformDirection(Vector3.forward));
 
     }
@@ -81,7 +83,12 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
 
-        
+        /*
+            Update player height text & time text.
+            Allow player to shoot every 4 frames.
+            Its every 4 frames to save on performance.
+        */
+
 
         heightText.text = "height:\n" + Mathf.RoundToInt(mainCamera.position.y).ToString() + "m";
 
@@ -93,42 +100,40 @@ public class PlayerManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            
-
-        goopShootSoundSource.PlayOneShot(goopShootSoundClip, 0.4f);
+            goopShootSoundSource.PlayOneShot(goopShootSoundClip, 0.4f);
             Shoot(0);
         }
 
-       if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
         {
-            if(frameCounter % 4 == 0)
+            if (frameCounter % 4 == 0)
                 Shoot(0);
         }
 
-             if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
-            
 
-        goopShootSoundSource.PlayOneShot(goopShootSoundClip, 0.4f);
+
+            goopShootSoundSource.PlayOneShot(goopShootSoundClip, 0.4f);
             Shoot(1);
         }
 
-       if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1))
         {
-            if(frameCounter % 4 == 0)
+            if (frameCounter % 4 == 0)
                 Shoot(1);
         }
 
-        if(Input.GetMouseButton(0) || Input.GetMouseButton(1))
+        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
-            if(frameCounter % 30 == 0)
+            if (frameCounter % 30 == 0)
             {
                 goopShootSoundSource.PlayOneShot(goopShootSoundClip, 0.4f);
             }
         }
 
         frameCounter++;
-        if(frameCounter >= 121)
+        if (frameCounter >= 121)
         {
             frameCounter = 0;
         }
@@ -139,29 +144,34 @@ public class PlayerManager : MonoBehaviour
     void Shoot(int type)
     {
 
-        if(type == 0){
+        if (type == 0)
+        {
             var particle = Instantiate(jumpGoopParticle, shootPoint.position, shootPoint.rotation, shootPoint);
             Destroy(particle, 0.5f);
         }
         else
         {
             var particle = Instantiate(runGoopParticle, shootPoint.position, shootPoint.rotation, shootPoint);
-            Destroy(particle, 0.5f);    
+            Destroy(particle, 0.5f);
         }
 
-    if(Physics.Raycast(mainCamera.position, mainCamera.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, shootableLayers))
+        if (Physics.Raycast(mainCamera.position, mainCamera.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, shootableLayers))
         {
-            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Goo"))
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Goo"))
             {
                 return;
-            } else {
-                if(type == 0){
+            }
+            else
+            {
+                if (type == 0)
+                {
                     var clone = Instantiate(jumpGoopSplat, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(clone, destroyGoopAfterTime);
 
                     var particle = Instantiate(jumpGoopParticleSplat, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(particle, 0.5f);
-                } else
+                }
+                else
                 {
                     var clone = Instantiate(runGoopSplat, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(clone, destroyGoopAfterTime);

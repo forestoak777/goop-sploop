@@ -20,18 +20,22 @@ public class Leaderboards: MonoBehaviour
 
     public TextMeshProUGUI usernameDisplay, scoreboardDisplay;
 
+    /*
+        This code is a modified version of the unity leaderboard sample code. it shows the leaderboard on a TextMeshPro.
+    */
+
     async void Awake()
     {
         await UnityServices.InitializeAsync();
 
+        if (!AuthenticationService.Instance.IsSignedIn)
+            {
         await SignInAnonymously();
-
+        }
         Debug.Log("Singed In!");
         var playerName = await AuthenticationService.Instance.GetPlayerNameAsync();
         usernameDisplay.text = "Username: " + playerName;
         Debug.Log("Signed in as: " + playerName);
-
-        //AddScore(500 + Random.Range(-50, 50));
         
         GetPaginatedScoresByTier();
     }

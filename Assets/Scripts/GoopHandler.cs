@@ -16,7 +16,8 @@ public class GoopHandler : MonoBehaviour
     public AudioClip goopTouchSoundClip;
     public AudioSource playerAudioSource;
 
-    void Start() {
+    void Start()
+    {
         charController = GetComponent<KinematicCharacterController.Examples.ExampleCharacterController>();
         initMaxSpeed = charController.MaxStableMoveSpeed;
         initMaxAirSpeed = charController.MaxAirMoveSpeed;
@@ -26,8 +27,10 @@ public class GoopHandler : MonoBehaviour
 
     void Update()
     {
+        //Cooldown for bounce
+        //If this wasnt here, it would be inconsistent if the player touched 2 bounce gel at once.
         currentCooldown -= Time.deltaTime;
-        if(currentCooldown <= 0f)
+        if (currentCooldown <= 0f)
         {
             currentCooldown = 0f;
         }
@@ -35,39 +38,45 @@ public class GoopHandler : MonoBehaviour
 
     public void TriggerGoopJumpEvent(GameObject goop)
     {
-            //Bounce goo
-            Debug.Log("Adding Velocity!");
-            if(currentCooldown <= 0.05f){
-                playerAudioSource.PlayOneShot(goopTouchSoundClip, 0.6f); 
-                charController.AddVelocity(goop.transform.TransformDirection(Vector3.forward) * (goop.GetComponent<GoopTrigger>().gooBounceAmount + Mathf.Abs(GetComponent<Rigidbody>().linearVelocity.y)));
-            }
-            currentCooldown = coolDown;
+        //Bounce goo
+        Debug.Log("Adding Velocity!");
+        if (currentCooldown <= 0.05f)
+        {
+            playerAudioSource.PlayOneShot(goopTouchSoundClip, 0.6f);
+
+            //Add bounce force added to player y velocity to cancel out player falling shi.
+            charController.AddVelocity(goop.transform.TransformDirection(Vector3.forward) * (goop.GetComponent<GoopTrigger>().gooBounceAmount + Mathf.Abs(GetComponent<Rigidbody>().linearVelocity.y)));
+        }
+        currentCooldown = coolDown;
     }
 
-    
+
     public void TriggerGoopRunSound()
     {
-        playerAudioSource.PlayOneShot(goopTouchSoundClip, 0.1f); 
+        //slurp slurp slurp
+        playerAudioSource.PlayOneShot(goopTouchSoundClip, 0.1f);
     }
 
     public void TriggerGoopRun(GameObject goop)
     {
-            
-            Debug.Log("More Speed!");
-            currentMaxSpeed = initMaxSpeed * goop.GetComponent<GoopTrigger>().gooSpeedMultiplier;
-            currentMaxAirSpeed = initMaxAirSpeed * goop.GetComponent<GoopTrigger>().gooSpeedMultiplier;
 
-            charController.MaxStableMoveSpeed = currentMaxSpeed;
-            charController.MaxAirMoveSpeed = currentMaxAirSpeed;
+        //Make player go zoom!
+
+        Debug.Log("More Speed!");
+        currentMaxSpeed = initMaxSpeed * goop.GetComponent<GoopTrigger>().gooSpeedMultiplier;
+        currentMaxAirSpeed = initMaxAirSpeed * goop.GetComponent<GoopTrigger>().gooSpeedMultiplier;
+
+        charController.MaxStableMoveSpeed = currentMaxSpeed;
+        charController.MaxAirMoveSpeed = currentMaxAirSpeed;
     }
 
-        public void TriggerStopGoopRun(GameObject goop)
+    public void TriggerStopGoopRun(GameObject goop)
     {
-            Debug.Log("More Speed!");
-            currentMaxSpeed = initMaxSpeed;
-            currentMaxAirSpeed = initMaxAirSpeed;
+        Debug.Log("More Speed!");
+        currentMaxSpeed = initMaxSpeed;
+        currentMaxAirSpeed = initMaxAirSpeed;
 
-            charController.MaxStableMoveSpeed = currentMaxSpeed;
-            charController.MaxAirMoveSpeed = currentMaxAirSpeed;
+        charController.MaxStableMoveSpeed = currentMaxSpeed;
+        charController.MaxAirMoveSpeed = currentMaxAirSpeed;
     }
 }
