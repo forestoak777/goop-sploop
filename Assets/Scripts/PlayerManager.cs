@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 public class PlayerManager : MonoBehaviour
 {
 
+    public bool canShoot = true;
+
     public LayerMask shootableLayers;
     public Transform shootPoint;
     public Transform mainCamera;
@@ -98,37 +100,41 @@ public class PlayerManager : MonoBehaviour
             timeText.text = "Time: " + System.Math.Round(timeCount, 2).ToString();
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            goopShootSoundSource.PlayOneShot(goopShootSoundClip, 0.4f);
-            Shoot(0);
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            if (frameCounter % 4 == 0)
-                Shoot(0);
-        }
-
-        if (Input.GetMouseButtonDown(1))
+        if (canShoot)
         {
 
-
-            goopShootSoundSource.PlayOneShot(goopShootSoundClip, 0.4f);
-            Shoot(1);
-        }
-
-        if (Input.GetMouseButton(1))
-        {
-            if (frameCounter % 4 == 0)
-                Shoot(1);
-        }
-
-        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
-        {
-            if (frameCounter % 30 == 0)
+            if (Input.GetMouseButtonDown(0))
             {
                 goopShootSoundSource.PlayOneShot(goopShootSoundClip, 0.4f);
+                Shoot(0);
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                if (frameCounter % 4 == 0)
+                    Shoot(0);
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+
+
+                goopShootSoundSource.PlayOneShot(goopShootSoundClip, 0.4f);
+                Shoot(1);
+            }
+
+            if (Input.GetMouseButton(1))
+            {
+                if (frameCounter % 4 == 0)
+                    Shoot(1);
+            }
+
+            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+            {
+                if (frameCounter % 30 == 0)
+                {
+                    goopShootSoundSource.PlayOneShot(goopShootSoundClip, 0.4f);
+                }
             }
         }
 

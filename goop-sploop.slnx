@@ -1,0 +1,10 @@
+﻿<Solution>
+  <Project Path="Unity.Services.Leaderboards.csproj" />
+  <Project Path="Unity.Services.Leaderboards.Editor.Authoring.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Unity.Services.Leaderboards.Editor.Shared.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="Unity.Services.Leaderboards.Editor.Authoring.Core.csproj" />
+  <Project Path="Sample_LeaderboardsDeployment.csproj" />
+  <Project Path="Unity.Services.Leaderboards.Editor.csproj" />
+</Solution>
