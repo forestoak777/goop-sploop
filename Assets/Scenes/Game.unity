@@ -1605,7 +1605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2074602455651209248, guid: 683b9868350dda24ca9225079cd1e2f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.95
+      value: -15.84
       objectReference: {fileID: 0}
     - target: {fileID: 2074602455651209248, guid: 683b9868350dda24ca9225079cd1e2f6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1613,7 +1613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2074602455651209248, guid: 683b9868350dda24ca9225079cd1e2f6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -38.88
+      value: -39.08
       objectReference: {fileID: 0}
     - target: {fileID: 2074602455651209248, guid: 683b9868350dda24ca9225079cd1e2f6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -31671,8 +31671,8 @@ MonoBehaviour:
     m_Bits: 1
   shootPoint: {fileID: 2145593051}
   mainCamera: {fileID: 693010350}
-  jumpGoopSplat: {fileID: 0}
-  runGoopSplat: {fileID: 0}
+  jumpGoopSplat: {fileID: 5890769305877367600, guid: 3d2d8d0888249d340b19191b05c32a08, type: 3}
+  runGoopSplat: {fileID: 3278983784562870016, guid: d29fb4ff0bf18b842b64d77e0e2764de, type: 3}
   jumpGoopParticle: {fileID: 585573795}
   runGoopParticle: {fileID: 621671445}
   jumpGoopParticleSplat: {fileID: 1324375667}
