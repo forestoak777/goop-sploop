@@ -53,7 +53,7 @@ public class PlayerManager : MonoBehaviour
 
         timeText.text = "Time uploaded.\n" + System.Math.Round(timeCount, 2).ToString();
 
-        usernameText.text = usernameText.text + "\n has found ze gold";
+        usernameText.text = usernameText.text + "\n has woken up";
 
     }
 

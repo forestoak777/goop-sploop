@@ -957,7 +957,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 530.0873, y: 86.11798}
+  m_SizeDelta: {x: 676.2843, y: 86.118}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &682332623
 MonoBehaviour:
@@ -979,7 +979,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Climb to the top! Try to get the best score.
+  m_text: Climb up to 500 meters to wake up! Try to win in the fastest time.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d6494afcec76db845b281d756b078527, type: 2}
   m_sharedMaterial: {fileID: 433785805733991803, guid: d6494afcec76db845b281d756b078527, type: 2}
@@ -3166,6 +3166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28b68a578110af34284e5a7b57e19ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  onTrigger: 0
+  triggerSceneName: 
 --- !u!4 &1833328522
 Transform:
   m_ObjectHideFlags: 0
