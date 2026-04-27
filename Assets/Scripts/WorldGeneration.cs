@@ -14,7 +14,7 @@ public class WorldGeneration : MonoBehaviour
 
     //How big the world size is measured in chunks i guess.
     //wow is is really small but it works in the actual game so okie.
-    public int worldSizeInBlocks = 4;
+    public int worldWidth = 4, worldHeight = 2;
 
     // Basically the basis for how far apart individual prefabs will spawn
     public float baseBlockSpacing = 16;
@@ -50,11 +50,11 @@ public class WorldGeneration : MonoBehaviour
         //Generate using given prefab list around my location
 
         //Using a 3d array to spawn objects in a 3d grid. each "voxel" size is "blockSpacing"
-        for(int x = -worldSizeInBlocks; x < worldSizeInBlocks; x++)
+        for(int x = -worldWidth; x < worldWidth; x++)
         {
-            for(int y = -(worldSizeInBlocks/3); y < worldSizeInBlocks; y++)
+            for(int y = -(int)((double)worldHeight/3.0); y < worldHeight; y++)
             {
-                for(int z = -worldSizeInBlocks; z < worldSizeInBlocks; z++)
+                for(int z = -worldWidth; z < worldWidth; z++)
                 {
 
                     //Spawn a random prefab from the selected building block library
@@ -75,7 +75,7 @@ public class WorldGeneration : MonoBehaviour
             //spawn the next gen sphere
            var clone2 = Instantiate(
                 genSphere, 
-                new Vector3(basePosition.x + Random.Range(-worldSizeInBlocks, worldSizeInBlocks) * blockSpacing, basePosition.y + worldSizeInBlocks * blockSpacing + Random.Range(7f, 10f), basePosition.z + + Random.Range(-worldSizeInBlocks, worldSizeInBlocks) * blockSpacing),
+                new Vector3(basePosition.x + Random.Range(-worldWidth, worldWidth) * blockSpacing, basePosition.y + worldHeight * blockSpacing + Random.Range(7f, 10f), basePosition.z + + Random.Range(-worldWidth, worldWidth) * blockSpacing),
                 Quaternion.identity
             );  
 
